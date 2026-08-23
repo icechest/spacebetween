@@ -6,11 +6,9 @@
     <title>Between The Lines</title>
     <style>
         :root {
-            --bg-color: #0a0c10;
             --text-primary: #f0f6fc;
-            --text-secondary: #8b949e;
-            --accent-glow: rgba(0, 242, 254, 0.15);
-            --line-color: rgba(240, 246, 242, 0.05);
+            --text-secondary: rgba(255, 255, 255, 0.6);
+            --accent-glow: rgba(0, 242, 254, 0.25);
         }
 
         * {
@@ -20,120 +18,135 @@
         }
 
         body {
-            background-color: var(--bg-color);
+            /* Replace 'image_KTZWNC.png' with your actual image path or filename */
+            background-image: url('betweenlines.jpg');
+            background-color: #030303;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
             color: var(--text-primary);
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow: hidden;
-            perspective: 1000px;
-        }
-
-        /* Abstract structural background lines */
-        .bg-lines {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(var(--line-color) 1px, transparent 1px);
-            background-size: 100% 40px;
-            z-index: 1;
-            pointer-events: none;
+            overflow-x: hidden;
+            /* Prevents unwanted elastic scrolling behaviors on iOS mobile devices */
+            position: relative;
         }
 
         .container {
             position: relative;
             z-index: 2;
-            max-width: 800px;
-            padding: 40px;
+            width: 100%;
+            max-width: 650px;
+            /* Uses fluid viewport padding for better breathing room on small screens */
+            padding: 40px 6vw;
             text-align: center;
+            background: transparent;
+            border: none;
+            box-shadow: none;
         }
 
         .text-block {
-            font-size: 1.25rem;
-            line-height: 1.8;
+            /* Responsive font sizing using clamp to scale cleanly between mobile and desktop */
+            font-size: clamp(1rem, 4vw, 1.25rem);
+            line-height: 1.7;
             color: var(--text-secondary);
             letter-spacing: 0.05em;
-            transition: color 0.5s ease;
+            text-shadow: 0 3px 10px rgba(0, 0, 0, 0.95), 0 1px 3px rgba(0, 0, 0, 0.8);
+            transition: color 0.6s ease;
         }
 
-        /* The Void / The intentional gap concept */
+        /* The Void / Responsive interactive middle gap */
         .the-gap {
-            height: 160px;
-            margin: 20px 0;
+            /* Slightly shorter height on mobile screens to fit within smaller viewports */
+            height: clamp(120px, 20vh, 180px);
+            margin: 15px 0;
             position: relative;
             display: flex;
             justify-content: center;
             align-items: center;
             cursor: pointer;
-            group;
+            /* Removes the default gray touch highlight box on mobile webkit browsers */
+            -webkit-tap-highlight-color: transparent;
         }
 
         .the-gap::before {
             content: '';
             position: absolute;
-            width: 120%;
+            width: 100%;
             height: 100%;
-            background: radial-gradient(ellipse, var(--accent-glow) 0%, transparent 70%);
-            opacity: 0.3;
+            background: radial-gradient(ellipse, var(--accent-glow) 0%, transparent 75%);
+            opacity: 0;
             transition: opacity 0.8s ease, transform 0.8s ease;
-            transform: scale(0.9);
+            transform: scale(0.8);
         }
 
-        /* Ambient glowing boundary lines */
+        /* Ambient boundary lines */
         .gap-line {
             position: absolute;
-            left: 10%;
-            width: 80%;
+            left: 15%;
+            width: 70%;
             height: 1px;
-            background: linear-gradient(90deg, transparent, var(--text-secondary), transparent);
-            opacity: 0.2;
-            transition: all 0.5s ease;
+            background: linear-gradient(90deg, transparent, rgba(0, 242, 254, 0.4), transparent);
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .gap-line.top { top: 0; }
         .gap-line.bottom { bottom: 0; }
 
-        /* Interactive Hover Effects */
-        .the-gap:hover::before {
-            opacity: 1;
-            transform: scale(1.05);
-        }
-
-        .the-gap:hover .gap-line {
-            width: 100%;
-            left: 0;
-            opacity: 0.7;
-            background: linear-gradient(90deg, transparent, #00f2fe, #4facfe, transparent);
-            box-shadow: 0 0 10px rgba(0, 242, 254, 0.5);
-        }
-
-        .the-gap:hover + .bottom-text {
-            color: var(--text-primary);
-        }
-
+        /* Typography inside the gap */
         .gap-insight {
-            font-size: 0.85rem;
+            font-size: clamp(0.75rem, 3vw, 0.85rem);
             color: #00f2fe;
             text-transform: uppercase;
             letter-spacing: 0.4em;
-            opacity: 0;
-            transform: translateY(10px);
+            /* Slightly higher baseline visibility on touch screens where hover states are absent */
+            opacity: 0.3;
+            transform: scale(0.95);
             transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            text-shadow: 0 0 8px rgba(0, 242, 254, 0.3);
         }
 
-        .the-gap:hover .gap-insight {
+        /* Desktop Hover Styles & Mobile Active/Touch States */
+        .the-gap:hover::before,
+        .the-gap:active::before {
             opacity: 1;
-            transform: translateY(0);
+            transform: scale(1.1);
+        }
+
+        .the-gap:hover .gap-line,
+        .the-gap:active .gap-line {
+            width: 100%;
+            left: 0;
+            background: linear-gradient(90deg, transparent, #00f2fe, transparent);
+            box-shadow: 0 0 12px rgba(0, 242, 254, 0.8);
+        }
+
+        .the-gap:hover .gap-insight,
+        .the-gap:active .gap-insight {
+            opacity: 1;
+            transform: scale(1.05);
+            color: #ffffff;
+            text-shadow: 0 0 15px rgba(0, 242, 254, 0.9), 0 0 5px #00f2fe;
+        }
+
+        /* Media query specifically targeting mobile to tweak background attachment performance issues on iOS */
+        @media (max-width: 768px) {
+            body {
+                /* Fixes a common mobile bug where background-attachment: fixed causes lag and layout clipping */
+                background-attachment: scroll;
+            }
+            .gap-line {
+                left: 10%;
+                width: 80%;
+            }
         }
     </style>
 </head>
 <body>
-
-    <div class="bg-lines"></div>
 
     <div class="container">
         <p class="text-block">
@@ -147,7 +160,7 @@
             <div class="gap-line bottom"></div>
         </div>
 
-        <p class="text-block bottom-text">
+        <p class="text-block">
             By embracing the deliberate absence of sound, content, and distractions, 
             we find meaning inside the negative space.
         </p>
