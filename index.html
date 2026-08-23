@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Between The Lines</title>
+    <style>
+        :root {
+            --text-primary: #f0f6fc;
+            --text-secondary: rgba(255, 255, 255, 0.5);
+            --accent-glow: rgba(0, 242, 254, 0.25);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            /* Replace 'image_KTZWNC.png' with your actual image path or filename */
+            background-image: url('betweenlines.jpg');
+            background-color: #030303;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            color: var(--text-primary);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+        }
+
+        /* Completely transparent wrapper so content floats directly over the background graphic */
+        .container {
+            position: relative;
+            z-index: 2;
+            max-width: 650px;
+            padding: 40px 20px;
+            text-align: center;
+            background: transparent;
+            border: none;
+            box-shadow: none;
+        }
+
+        .text-block {
+            font-size: 1.25rem;
+            line-height: 1.8;
+            color: var(--text-secondary);
+            letter-spacing: 0.06em;
+            /* Strong text-shadow ensures absolute legibility over light spots in the graphic */
+            text-shadow: 0 4px 12px rgba(0, 0, 0, 0.95), 0 2px 4px rgba(0, 0, 0, 0.8);
+            transition: color 0.6s ease, transform 0.6s ease;
+        }
+
+        /* The Void / The intentional gap concept aligned over the background beam */
+        .the-gap {
+            height: 180px;
+            margin: 20px 0;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .the-gap::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse, var(--accent-glow) 0%, transparent 75%);
+            opacity: 0;
+            transition: opacity 0.8s ease, transform 0.8s ease;
+            transform: scale(0.8);
+        }
+
+        /* Ambient glowing boundary lines splitting the layout */
+        .gap-line {
+            position: absolute;
+            left: 20%;
+            width: 60%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(0, 242, 254, 0.4), transparent);
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .gap-line.top { top: 0; }
+        .gap-line.bottom { bottom: 0; }
+
+        /* Interactive Hover Effects */
+        .the-gap:hover::before {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+
+        .the-gap:hover .gap-line {
+            width: 100%;
+            left: 0;
+            background: linear-gradient(90deg, transparent, #00f2fe, transparent);
+            box-shadow: 0 0 12px rgba(0, 242, 254, 0.8);
+        }
+
+        /* Reveal the text cleanly when hovering the core space */
+        .the-gap:hover ~ .text-block {
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        .gap-insight {
+            font-size: 0.85rem;
+            color: #00f2fe;
+            text-transform: uppercase;
+            letter-spacing: 0.5em;
+            opacity: 0.2;
+            transform: scale(0.95);
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            text-shadow: 0 0 8px rgba(0, 242, 254, 0.3);
+        }
+
+        .the-gap:hover .gap-insight {
+            opacity: 1;
+            transform: scale(1.05);
+            color: #ffffff;
+            text-shadow: 0 0 15px rgba(0, 242, 254, 0.9), 0 0 5px #00f2fe;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <p class="text-block">
+            True clarity does not always sit directly within the written words. 
+            The most profound truths remain hidden, quietly waiting in the margins.
+        </p>
+
+        <div class="the-gap">
+            <div class="gap-line top"></div>
+            <span class="gap-insight">Read Between the Lines</span>
+            <div class="gap-line bottom"></div>
+        </div>
+
+        <p class="text-block">
+            By embracing the deliberate absence of sound, content, and distractions, 
+            we find meaning inside the negative space.
+        </p>
+    </div>
+
+</body>
+</html>
